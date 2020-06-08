@@ -1,6 +1,6 @@
 class Node:
     def __init__(self, value, next = None):
-        self.value = value
+        self.data = value
         self.next = next
     
     def get_value(self):

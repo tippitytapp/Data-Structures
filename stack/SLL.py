@@ -1,10 +1,10 @@
 class Node:
     def __init__(self, value, next = None):
-        self.data = value
+        self.value = value
         self.next = next
     
     def get_value(self):
-        return self.data
+        return self.value
 
     def get_next(self):
         return self.next

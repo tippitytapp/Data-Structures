@@ -10,58 +10,47 @@ This part of the project comprises two days:
    on the BSTNode class.
 """
 class Node:
-    def __init__(self, data=None):
-        self.data = data
+    def __init__(self, value=None):
+        self.value = value
         self.left = None
         self.right = None
 
 class BSTNode:
-    def __init__(self):
+    def __init__(self, value = None):
         self.root = None
+        self.value = value
+        self.left = None
+        self.right = None
 
     # Insert the given value into the tree
-    def insert(self, data):
-        if self.root is None:
-            self.root = Node(data)
-        else:
-            self._insert(data, self.root)
-
-    def _insert(self, data, cur_node):
-        if data < cur_node.data:
-            if cur_node.left is None:
-                cur_node.left = Node(data)
+    def insert(self, value):
+        if value < self.value:
+            if self.left:
+                self.left.insert(value)
             else:
-                self._insert(data, cur_node.left)
-        elif data > cur_node.data:
-            if cur_node.right is None:
-                cur_node.right = Node(data)
-            else:
-                self._insert(data, cur_node.right)
+                self.left = BSTNode(value)
         else:
-            print('Value is already present in tree')
-
+            if self.right:
+                self.right.insert(value)
+            else: 
+                self.right = BSTNode(value)
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        if self.root:
-            is_found = self._contains(target, self.root)
-            if is_found:
-                return True
-            return False
-        else:
-            return None
-
-
-    def _contains(self, data, cur_node):
-        if data > cur_node.data and cur_node.right:
-            return self._contains(data, cur_node.right)
-        elif data< cur_node.data and cur_node.left:
-            return self._contains(data, cur_node.left)
-        elif data == cur_node.data:
+        if self.value == target:
             return True
+        if target < self.value:
+            if self.left is None:
+                return False
+            else: 
+                return self.left.contains(target)
+        else:
+            if self.right is None:
+                return False
+            else:
+                return self.right.contains(target)
+
         
-
-
     # Return the maximum value found in the tree
     def get_max(self):
         pass

@@ -80,30 +80,81 @@ class BSTNode:
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        # queue = []
-        # queue.append(self.root.value)
-        # while(len(queue) > 0):
-        #     print(queue[0].value)
-        #     new_node = queue.pop(0)
-        #     if new_node.left is not None:
-        #         queue.append(new_node.left)
-        #     if new_node.right is not None:
-        #         queue.append(new_node.right)
-        pass
+        # pass
+        visited = []
+        if node:
+            visited.append(node)
+            print(node.value)
+        current = node
+        while current:
+            if current.left:
+                print(current.left.value)
+                visited.append(current.left)
+            if current.right:
+                print(current.right.value)
+                visited.append(current.right)
+            visited.pop(0)
+            if not visited:
+                break
+            current = visited[0]
+                # current = node
+                # queue = deque()
+                # while queue or current:
+                #     if current:
+                #         queue.push(current)
+                #         current = current.left
+                #     else:
+                #         current = queue.pop()
+                #         print(current.value, end="\n")
+                #         current = current.right
+                # print()
+                # queue = []
+                # queue.append(node.value)
+                # while(len(queue) > 0):
+                #     node = queue.pop(0)
+                #     print(node)
+                #     if self.left is not None:
+                #         queue.append(self.left)
+                #     if self.right is not None:
+                #         queue.append(self.right)
+                
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
-    def dft_print(self, traversal_type):
-        pass
+    def dft_print(self, node):
+        # pass
+        # node = BSTNode(traversal_type)
+        visited = []
+        visited.append(node)
+        while len(visited) > 0:
+            node = visited.pop()
+            print(node.value)
+            if node.left:
+                visited.append(node.left)
+            if node.right:
+                visited.append(node.right)
+
+
 
     # Stretch Goals -------------------------
     # Note: Research may be required
 
     # Print Pre-order recursive DFT
-    def pre_order_dft(self, start, traversal):
-        pass
+    def pre_order_dft(self, node):
+        if node is None:
+            return
+        print(node.value)
+        node.pre_order_dft(node.left)
+        node.pre_order_dft(node.right)
+
 
 
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
-        pass
+        # pass
+        if node is None:
+            return
+        node.post_order_dft(node.left)
+        node.post_order_dft(node.right)
+        print(node.value)
+

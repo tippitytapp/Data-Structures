@@ -50,21 +50,62 @@ class BSTNode:
             else:
                 return self.right.contains(target)
 
-        
+    def _recur_contains(self, target):
+        # base case?
+        # we find the target in a tree node
+        if self.value == target:
+            return True
+        # figure out which direction we need to go in
+        if target < self.value:
+            # we go left
+            if not self.left:
+                return False
+            else:
+                return self.left._recur_contains(target)
+        # or, we get to a spot where the node should be, but nothing is there
+        # how do we move towards the base case?
+        else:
+            if not self.right:
+                return False
+            else:
+                return self.right._recur_contains(target)
+
     # Return the maximum value found in the tree
     def get_max(self):
+        # we can keep going right until we cant go right anymore
+
         if self.right:
             return self.right.get_max()
         else:
             return self.value
 
+        ## THIS IS HOW SEAN DID IT ##
+        # if not self.right:
+        #     return self.value
+        # return self.right.get_max()
+
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
+        # this doesnt actually return anything
+        #needs to call the fn on self.value
         fn(self.value)
         if self.left:
             self.left.for_each(fn)
         if self.right:
             self.right.for_each(fn)
+
+        ## THIS IS HOW SEAN DID IT ##
+        # fn(self.value)
+        # we do we propagate to all the other nodes in the tree
+        # is there a left child?
+        # if self.left:
+            # if yes, then call its for_each with the same fn
+            # self.left.for_each(fn)
+        # is there a right child?
+        # if self.right:
+            # if yes, then call its for_each with the same fn
+            # self.right.for_each(fn)
+
 
     # Part 2 -----------------------
 

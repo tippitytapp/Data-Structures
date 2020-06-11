@@ -9,6 +9,7 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+from collections import deque
 class Node:
     def __init__(self, value=None):
         self.value = value
@@ -105,6 +106,37 @@ class BSTNode:
         # if self.right:
             # if yes, then call its for_each with the same fn
             # self.right.for_each(fn)
+    
+    def iter_depth_for_each(self, fn):
+        # with depth-first traveral, theres a certain order to when we visit nodes
+        # whats tht order?
+        # init a stack to work for our LIFO order
+        stack = []
+        # add the first node to our stack
+        stack.append(self)
+        # continue traversing until our stack is empty
+        while len(stack) > 0:
+            # pop off the stack
+            cur_node = stack.pop()
+            # add its children to the stack
+            # add right child first, and left side second to ensure left is popped off the stack first
+            if cur_node.right:
+                stack.append(cur_node.right)
+            if cur_node.left:
+                stack.append(cur_node.left)
+            # call the fn on its children
+            fn(self.value)
+    
+    def iter_bredth_for_each(self, fn):
+        q = deque()
+        q.append(self)
+        while len(q) > 0:
+            cur_node = q.popleft()
+            if cur_node.left:
+                q.append(cur_node.left)
+            if cur_node.right:
+                q.append(cur_node.right)
+            fn(self.value)
 
 
     # Part 2 -----------------------
@@ -198,4 +230,3 @@ class BSTNode:
         node.post_order_dft(node.left)
         node.post_order_dft(node.right)
         print(node.value)
-

@@ -68,7 +68,6 @@ class LinkedList:
             current = current.get_next()
         return max_so_far
 
-
     def contains(self, value):
         if not self.head:
             return False

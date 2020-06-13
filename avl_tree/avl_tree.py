@@ -13,11 +13,15 @@ A tree class to keep track of things like the
 balance factor and the rebalancing logic
 """
 class AVLTree:
-    def __init__(self, node=None):
-        self.node = node
+    def __init__(self, *args):
+        self.node = None
         # init height to -1 because of 0-indexing
         self.height = -1
         self.balance = 0
+
+        if len(args) == 1:
+            for i in args[0]:
+                self.insert(i)
 
     """
     Display the whole tree. Uses recursive def.
@@ -39,8 +43,25 @@ class AVLTree:
     Computes the maximum number of levels there are
     in the tree
     """
-    def update_height(self):
-        pass
+    def height(self):
+        if self.node:
+            return self.node.height
+        else: 
+            return 0
+
+    def is_leaf(self):
+        return self.height == 0
+
+    def update_height(self, recurse = True):
+        if not self.node == None:
+            if recurse:
+                if self.node.left != None:
+                    self.node.left.update_height()
+                if self.node.right != None:
+                    self.node.right.update_height()
+            self.height = max(self.node.left.height, self.node.right.height) + 1
+        else:
+            self.height -1
 
     """
     Updates the balance factor on the AVLTree class
@@ -70,7 +91,26 @@ class AVLTree:
     1 or -1
     """
     def rebalance(self):
-        pass
+        self.update_height(False)
+        self.update_balance(False)
+        while self.balance < -1 or self.balance > 1:
+            if self.balance > 1:
+                if self.node.left.balance < 0:
+                    self.node.left.left_rotate()
+                    self.update_height()
+                    self.update_balance()
+                self.right_rotate()
+                self.update_height()
+                self.update_balance()
+            if self.balance < -1:
+                if self.node.right.balance > 0:
+                    self.node.right.right_rotate()
+                    self.update_height()
+                    self.update_balance()
+                self.left_rotate()
+                self.update_height()
+                self.update_balance()
+
         
     """
     Uses the same insertion logic as a binary search tree
@@ -78,4 +118,15 @@ class AVLTree:
     if we need to rebalance
     """
     def insert(self, key):
-        pass
+        tree = self.node
+
+        newnode = Node(key)
+        if tree == None:
+            self.node = newnode
+            self.node.left = AVLTree()
+            self.node.right = AVLTree()
+        elif key < key.tree:
+            self.node.left.insert(key)
+        elif key > tree.key:
+            self.node.right.insert(key)
+        self.rebalance()

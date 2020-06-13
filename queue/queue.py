@@ -13,7 +13,7 @@ return elements in First In First Out order.
 Stretch: What if you could only use instances of your Stack class to implement the Queue?
          What would that look like? How many Stacks would you need? Try it!
 """
-
+from SLL import *
 # This implementation uses the array method as the underlying storage structure
 # class Queue:
 #     def __init__(self):
@@ -35,18 +35,19 @@ Stretch: What if you could only use instances of your Stack class to implement t
         
 
 # This implementation uses the inked list implementation
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-
 class Queue:
     def __init__(self):
         self.head = None
         self.last = None
+        self.queue = LinkedList()
     
-    # def __len__(self):
-    #     length = len(self.data)
+    def __len__(self):
+        temp = self.head
+        count = 0
+        while (temp):
+            count += 1
+            temp = temp.next
+        return count
 
     def enqueue(self, value):
         if self.last is None:
@@ -60,6 +61,6 @@ class Queue:
         if self.head is None:
             return None
         else:
-            data = self.head.data
+            data = self.head.value
             self.head = self.head.next
             return data
